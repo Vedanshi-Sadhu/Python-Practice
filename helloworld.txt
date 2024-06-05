@@ -1,0 +1,73 @@
+#Below are the defined global variables:
+
+global count_word, char_count_spaces, char_count_nospaces
+global freq_letter, common_word, palindrome
+
+count_word = 0
+char_count_spaces = 0
+char_count_nospaces = 0
+freq_letter = {}
+common_word = ""
+palindrome = []
+word_freq = {}
+
+#By using the following loop (while loop) user should be able to run multiple analyses without restarting the program. 
+
+while True:
+
+#Prompt the user to enter a block of text also because the program can have multiple analyses add an option for the users to quit (here q letter is used). 
+
+    user_input = input("Enter a block of text ('q' to quit): ")
+    if user_input.lower() == 'q':   #if the user gives 'q' as an input the program will terminate
+       break
+    else:
+ 
+#Counting the number of words in the provided text.
+        def count_words(text):
+            words = text.split()   #here the user's input is splitted to count the number to words
+            return len(words)       #len function id used to determine the number of words in the user's input
+        count_word = count_words(user_input)
+        print(f"Word count: {count_word}")
+
+#Counting the number of characters including spaces. 
+
+        def char_count_spaces(text):      
+            return len(text)
+
+        char_count_spaces = char_count_spaces(user_input)       #here total number of characters is reported including space
+        print(f"Character count (including spaces): {char_count_spaces}")
+
+#Counting the number of characters excluding spaces. 
+
+        def char_count_nospaces(text):
+            return len(text.replace(" ", ""))    #replace function is used to eliminate spaces from user's input
+
+        char_count_nospaces = char_count_nospaces(user_input)   #here total number of characters is reported excluding space
+        print(f"Character count (excluding spaces): {char_count_nospaces}")
+
+#Identifying if the text is palindromes. 
+
+        def isPalindrome(user_input):
+            return user_input == user_input[::-1]  #[::-1] - this reverse the input entered 
+        ans = isPalindrome(user_input)   # if the entered input and the reverse are same then it is a palindrome.
+        if ans:
+            print("Yes '" + user_input + "' is a Palindrome.")
+        else:
+            print("No '"+ user_input + "' is not a Palindrome.")
+
+#Reporting the frequency of each letter
+
+        for char in user_input.lower():   #lower - function used to convert all characters in lowercase for easy calculation
+                if char.isalpha():
+                    freq_letter[char] = freq_letter.get(char, 0) + 1  #dictionary is used for calculating the occurances of each letter
+        print("\nLetter frequency:")
+        for character, frequency in sorted(freq_letter.items()):  #sorted - function returns a new list containing all items in ascending order
+            print(f"{character}: {frequency}")
+
+#Reporting the most common word
+
+        for word in user_input:
+            word_freq[word] = word_freq.get(word, 0) + 1  #here dictionary is used for calculating most common word
+        common_word = max(word_freq, key=word_freq.get)   #max function is used so that maximum occurances of a letter can be known from dictionary
+
+        print(f"\nMost common word: {common_word}")
